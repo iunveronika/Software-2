@@ -1,1 +1,28 @@
+import requests
+
+def get_weather(api_key, city):
+    url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}"
+    response = requests.get(url)
+    if response.status_code == 200:
+        data = response.json()
+        weather = data['weather'][0]['description']
+        temp_kelvin = data['main']['temp']
+        temp_celsius = temp_kelvin - 273.15
+        return weather, temp_celsius
+    else:
+        print(f"Error: {response.status_code}, {response.text}")
+        return None, None
+
+def main():
+    api_key = '03483577f8a627af29749e2cc9045565'
+    city = input("Enter the name of a municipality: ")
+    weather, temp_celsius = get_weather(api_key, city)
+    if weather is not None:
+        print(f"Weather: {weather}")
+        print(f"Temperature: {temp_celsius:.2f}°C")
+    else:
+        print("Weather data not found.")
+
+if __name__ == "__main__":
+    main()
 
