@@ -6,7 +6,6 @@ def fetch_random_chuck_norris_joke():
         response = requests.get(api_url)
 
         if response.status_code == 200:
-            # Parse the JSON response to get the joke
             joke_data = response.json()
             return joke_data['value']
         else:
